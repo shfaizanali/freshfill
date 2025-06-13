@@ -1,0 +1,55 @@
+.auth-page {
+	min-height: 100vh;
+	background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.auth-page .card {
+	border-radius: 15px;
+	transition: transform 0.3s ease;
+}
+
+.auth-page .card:hover {
+	transform: translateY(-5px);
+}
+
+.auth-page .text-primary {
+	color: #3498db !important;
+}
+
+.auth-page .btn-primary {
+	background-color: #3498db;
+	border-color: #3498db;
+}
+
+.auth-page .btn-primary:hover {
+	background-color: #2980b9;
+	border-color: #2980b9;
+}
+
+.auth-page .btn-link {
+	color: #3498db;
+	text-decoration: none;
+}
+
+.auth-page .btn-link:hover {
+	color: #2980b9;
+	text-decoration: underline;
+}
+
+.chat-container::-webkit-scrollbar {
+	width: 6px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+	background: #f1f1f1;
+	border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+	background: #555;
+}
