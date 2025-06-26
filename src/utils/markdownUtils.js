@@ -59,7 +59,6 @@ renderer.code = (code, language) => {
 renderer.blockquote = (quote) => {
 	return `<blockquote class="markdown-blockquote">${quote}</blockquote>`;
 };
-
 // Customize link rendering
 renderer.link = (href, title, text) => {
 	const titleAttr = title ? ` title="${title}"` : "";

@@ -164,7 +164,7 @@ export default function ChatPage({ session, userRole }) {
 					body: JSON.stringify({
 						chatInput: userMessage,
 						userId: session.user.id,
-						sessionId: session.user.id,
+						session_id: session.user.id,
 						email: session.user.email,
 						timestamp: new Date().toISOString(),
 						fileContext: uploadedFiles
