@@ -190,27 +190,25 @@ export default function ChatPage({ session, userRole }) {
 			const responseData = await res.json();
 			console.log("Raw N8N Response:", responseData);
 
-			// Process the response using the new utility
-			const fullReply = extractTextFromResponse(responseData);
-			console.log("Processed Full Reply:", fullReply);
+			// Extract the text from the response
+			const messageText = extractTextFromResponse(responseData);
+			console.log("Extracted message:", messageText);
 
-			if (!fullReply) {
+			if (!messageText) {
 				throw new Error("Failed to extract a valid response.");
 			}
 
-			// Split the full reply into logical, typed parts for separate messages
-			const replyParts = splitResponseIntoParts(fullReply);
-
-			// Update chat log with the new messages
+			// Update chat log with the new message
 			setChatLog((log) => {
 				const newLog = log.filter((msg) => !msg.isTyping);
-				const newMessages = replyParts.map((part) => ({
-					who: "Annie",
-					text: part.text,
-					type: part.type,
-					timestamp: new Date().toISOString(),
-				}));
-				return [...newLog, ...newMessages];
+				return [
+					...newLog,
+					{
+						who: "Annie",
+						text: messageText,
+						timestamp: new Date().toISOString(),
+					},
+				];
 			});
 
 			setUploadedFiles([]);
@@ -287,7 +285,7 @@ export default function ChatPage({ session, userRole }) {
 												<span className="ms-2">{msg.text}</span>
 											</div>
 										) : (
-											<MarkdownMessage text={msg.text} />
+											<MarkdownMessage content={msg.text} />
 										)}
 									</div>
 								</div>

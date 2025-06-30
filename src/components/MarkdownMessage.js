@@ -1,42 +1,22 @@
 import React from "react";
-import {
-	parseMarkdown,
-	containsMarkdown,
-	createMarkup,
-} from "../utils/markdownUtils";
+import { marked } from "marked";
 import "../components/MarkdownStyles.css";
 
 /**
  * A component that renders a string as markdown.
- * It expects a clean string as the `text` prop.
+ * It expects a clean string as the `content` prop.
  */
-const MarkdownMessage = ({ text, className = "" }) => {
-	// Ensure the input is a string. If not, display an error message.
-	const messageText =
-		typeof text === "string" || typeof text === "number"
-			? String(text)
-			: "Error: Invalid content";
+const MarkdownMessage = ({ content }) => {
+	// Convert content to string if it isn't already
+	const text = typeof content === "string" ? content : String(content || "");
 
-	// Check if the text contains markdown syntax.
-	const hasMarkdown = containsMarkdown(messageText);
-
-	// If it doesn't contain markdown, render it as plain text
-	// preserving whitespace and line breaks.
-	if (!hasMarkdown) {
-		return (
-			<span className={className} style={{ whiteSpace: "pre-wrap" }}>
-				{messageText}
-			</span>
-		);
-	}
-
-	// If it has markdown, parse it to HTML and render it.
-	const htmlContent = parseMarkdown(messageText);
+	// Convert markdown to HTML
+	const html = marked(text);
 
 	return (
 		<div
-			className={`markdown-content ${className}`}
-			dangerouslySetInnerHTML={createMarkup(htmlContent)}
+			className="markdown-content"
+			dangerouslySetInnerHTML={{ __html: html }}
 		/>
 	);
 };

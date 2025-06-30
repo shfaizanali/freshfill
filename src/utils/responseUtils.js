@@ -8,55 +8,34 @@
  */
 
 /**
- * Recursively extracts text content from any data structure by prioritizing known text keys.
- *
- * @param {*} data The input data from the API response.
- * @returns {string} A cleaned, concatenated string of all found text.
+ * Simple function to extract text from the API response
  */
-export const extractTextFromResponse = (data) => {
-	// 1. Handle null or undefined
-	if (data === null || data === undefined) {
-		return "";
-	}
+export const extractTextFromResponse = (response) => {
+	if (!response) return "";
 
-	// 2. Handle strings (clean and trim)
-	if (typeof data === "string") {
-		return data
-			.replace(/^["']|["']$/g, "")
-			.replace(/\\n/g, "\n")
-			.trim();
-	}
+	// If response is a string, return it directly
+	if (typeof response === "string") return response;
 
-	// 3. Handle arrays (process each element recursively)
-	if (Array.isArray(data)) {
-		return data
-			.map((item) => extractTextFromResponse(item))
-			.filter(Boolean) // Remove empty strings
-			.join("\n\n");
-	}
-
-	// 4. Handle objects (the core logic)
-	if (typeof data === "object") {
-		const textKeys = [
-			"output",
-			"text",
-			"content",
-			"message",
-			"answer",
-			"reply",
-		];
-		for (const key of textKeys) {
-			if (data[key] !== undefined) {
-				// Found a primary key, extract from it and return immediately.
-				return extractTextFromResponse(data[key]);
-			}
+	// If response has an output property
+	if (response.output) {
+		// If output is a string, return it
+		if (typeof response.output === "string") {
+			return response.output;
 		}
-		// If no primary key is found in a simple object, return empty to avoid [object Object].
-		return "";
+		// If output is an object, stringify it
+		return JSON.stringify(response.output);
 	}
 
-	// 5. Fallback for other data types (e.g., numbers)
-	return String(data).trim();
+	// If nothing else works, stringify the entire response
+	return JSON.stringify(response);
+};
+
+/**
+ * Simple function to check if text contains markdown
+ */
+export const containsMarkdown = (text) => {
+	if (!text || typeof text !== "string") return false;
+	return /[*_`#>-]/.test(text);
 };
 
 /**
