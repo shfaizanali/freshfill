@@ -3,7 +3,7 @@
 .markdown-content {
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
 		"Helvetica Neue", Arial, sans-serif;
-	line-height: 40px;
+	line-height: 35px;
 	color: inherit;
 	word-wrap: break-word;
 }
@@ -22,7 +22,7 @@
 .markdown-content p {
 	margin: 0;
 	padding: 0;
-	line-height: 31px;
+	line-height: 25px;
 }
 
 .markdown-content p + p {
